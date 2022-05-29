@@ -1,12 +1,21 @@
 package com.archyx.lootmanager.loot.parser;
 
+import com.archyx.lootmanager.LootManager;
 import com.archyx.lootmanager.loot.Loot;
+import com.archyx.lootmanager.loot.context.ContextManager;
+import com.archyx.lootmanager.loot.context.LootContext;
 import com.archyx.lootmanager.util.Parser;
 import com.archyx.lootmanager.util.TextUtil;
 
-import java.util.Map;
+import java.util.*;
 
 public abstract class LootParser extends Parser {
+
+    protected LootManager manager;
+
+    public LootParser(LootManager manager) {
+        this.manager = manager;
+    }
 
     public abstract Loot parse(Map<?, ?> map);
 
@@ -33,6 +42,27 @@ public abstract class LootParser extends Parser {
         } else {
             return -1.0;
         }
+    }
+
+    protected Map<String, Set<LootContext>> parseContexts(Map<?, ?> map) {
+        Map<String, Set<LootContext>> contexts = new HashMap<>();
+        for (String contextKey : manager.getContextKeySet()) {
+            if (map.containsKey(contextKey)) {
+                Set<LootContext> contextSet = new HashSet<>();
+                ContextManager contextManager = manager.getContextManager(contextKey); // Get the manager
+                if (contextManager == null) continue;
+
+                List<String> contextList = getStringList(map, contextKey); // Get the list of contexts
+                for (String contextName : contextList) { // Parse each context
+                    LootContext lootContext = contextManager.parseContext(contextName);
+                    if (lootContext != null) {
+                        contextSet.add(lootContext);
+                    }
+                }
+                contexts.put(contextKey, contextSet);
+            }
+        }
+        return contexts;
     }
 
 }

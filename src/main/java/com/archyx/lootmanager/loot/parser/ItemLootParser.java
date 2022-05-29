@@ -1,5 +1,6 @@
 package com.archyx.lootmanager.loot.parser;
 
+import com.archyx.lootmanager.LootManager;
 import com.archyx.lootmanager.loot.Loot;
 import com.archyx.lootmanager.loot.builder.ItemLootBuilder;
 import com.archyx.lootmanager.util.MaterialUtil;
@@ -25,6 +26,10 @@ import java.util.*;
 
 public class ItemLootParser extends LootParser {
 
+    public ItemLootParser(LootManager manager) {
+        super(manager);
+    }
+
     @Override
     public Loot parse(Map<?, ?> map) {
         ItemStack item = parseItem(map);
@@ -37,7 +42,7 @@ public class ItemLootParser extends LootParser {
                 .maxAmount(amount[1])
                 .message(parseMessage(map))
                 .weight(parseWeight(map))
-                .xp(parseXp(map)).build();
+                .contexts(parseContexts(map)).build();
     }
 
     @SuppressWarnings("deprecation")

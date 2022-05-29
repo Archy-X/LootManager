@@ -1,5 +1,6 @@
 package com.archyx.lootmanager.loot.parser;
 
+import com.archyx.lootmanager.LootManager;
 import com.archyx.lootmanager.loot.Loot;
 import com.archyx.lootmanager.loot.builder.CommandLootBuilder;
 import com.archyx.lootmanager.util.CommandExecutor;
@@ -8,6 +9,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CommandLootParser extends LootParser {
+
+    public CommandLootParser(LootManager manager) {
+        super(manager);
+    }
 
     @Override
     public Loot parse(Map<?, ?> map) {
@@ -20,6 +25,6 @@ public class CommandLootParser extends LootParser {
         return builder.command(getString(map, "command"))
                 .message(parseMessage(map))
                 .weight(parseWeight(map))
-                .xp(parseXp(map)).build();
+                .contexts(parseContexts(map)).build();
     }
 }

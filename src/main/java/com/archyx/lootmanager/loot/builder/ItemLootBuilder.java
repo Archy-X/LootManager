@@ -14,7 +14,7 @@ public class ItemLootBuilder extends LootBuilder {
     @Override
     public Loot build() {
         Validate.notNull(item, "You must specify an item");
-        return new ItemLoot(weight, message, xp, item, minAmount, maxAmount);
+        return new ItemLoot(weight, message, contexts, item, minAmount, maxAmount);
     }
 
     public ItemLootBuilder() {

@@ -57,11 +57,11 @@ public class LootLoader extends Parser {
                             index++;
                             continue;
                         }
-                        loot = new ItemLootParser().parse(lootEntryMap);
+                        loot = new ItemLootParser(manager).parse(lootEntryMap);
                     }
                     // Command loot
                     else if (lootType.equalsIgnoreCase("command")) {
-                        loot = new CommandLootParser().parse(lootEntryMap);
+                        loot = new CommandLootParser(manager).parse(lootEntryMap);
                     } else {
                         throw new IllegalArgumentException("Unknown loot type: " + lootType);
                     }

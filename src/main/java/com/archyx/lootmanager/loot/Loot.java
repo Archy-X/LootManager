@@ -1,15 +1,21 @@
 package com.archyx.lootmanager.loot;
 
+
+import com.archyx.lootmanager.loot.context.LootContext;
+
+import java.util.Map;
+import java.util.Set;
+
 public abstract class Loot {
 
     protected final int weight;
     protected final String message;
-    protected final double xp;
+    protected final Map<String, Set<LootContext>> contexts;
 
-    public Loot(int weight, String message, double xp) {
+    public Loot(int weight, String message, Map<String, Set<LootContext>> contexts) {
         this.weight = weight;
         this.message = message;
-        this.xp = xp;
+        this.contexts = contexts;
     }
 
     public int getWeight() {
@@ -20,12 +26,8 @@ public abstract class Loot {
         return message;
     }
 
-    /**
-     * Gets the amount of Skill XP to reward
-     * @return The amount of XP, -1 if not specified
-     */
-    public double getXp() {
-        return xp;
+    public Map<String, Set<LootContext>> getContexts() {
+        return contexts;
     }
 
 }
