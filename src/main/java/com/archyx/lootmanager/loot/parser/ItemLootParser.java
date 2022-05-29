@@ -42,7 +42,9 @@ public class ItemLootParser extends LootParser {
                 .maxAmount(amount[1])
                 .message(parseMessage(map))
                 .weight(parseWeight(map))
-                .contexts(parseContexts(map)).build();
+                .contexts(parseContexts(map))
+                .options(parseOptions(map))
+                .build();
     }
 
     @SuppressWarnings("deprecation")

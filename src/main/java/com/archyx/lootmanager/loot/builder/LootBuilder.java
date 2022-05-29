@@ -12,11 +12,13 @@ public abstract class LootBuilder {
     protected int weight;
     protected String message;
     protected Map<String, Set<LootContext>> contexts;
+    protected Map<String, Object> options;
 
     public LootBuilder() {
         this.weight = 10;
         this.message = "";
         this.contexts = new HashMap<>();
+        this.options = new HashMap<>();
     }
 
     public LootBuilder weight(int weight) {
@@ -31,6 +33,11 @@ public abstract class LootBuilder {
 
     public LootBuilder contexts(Map<String, Set<LootContext>> contexts) {
         this.contexts = contexts;
+        return this;
+    }
+
+    public LootBuilder options(Map<String, Object> options) {
+        this.options = options;
         return this;
     }
 

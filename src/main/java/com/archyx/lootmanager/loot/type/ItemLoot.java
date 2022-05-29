@@ -13,8 +13,9 @@ public class ItemLoot extends Loot {
     protected int minAmount;
     protected int maxAmount;
 
-    public ItemLoot(int weight, String message, Map<String, Set<LootContext>> contexts, ItemStack item, int minAmount, int maxAmount) {
-        super(weight, message, contexts);
+    public ItemLoot(int weight, String message, Map<String, Set<LootContext>> contexts, Map<String, Object> options,
+                    ItemStack item, int minAmount, int maxAmount) {
+        super(weight, message, contexts, options);
         this.item = item;
         this.minAmount = minAmount;
         this.maxAmount = maxAmount;

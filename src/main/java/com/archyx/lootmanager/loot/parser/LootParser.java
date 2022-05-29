@@ -65,4 +65,15 @@ public abstract class LootParser extends Parser {
         return contexts;
     }
 
+    protected Map<String, Object> parseOptions(Map<?, ?> map) {
+        Map<String, Object> options = new HashMap<>();
+        for (String optionKey : manager.getOptionKeys()) {
+            if (map.containsKey(optionKey)) {
+                Object option = getElement(map, optionKey);
+                options.put(optionKey, option);
+            }
+        }
+        return options;
+    }
+
 }
