@@ -12,13 +12,15 @@ public class LootManager {
     private final Plugin plugin;
     private final LootLoader lootLoader;
     private final Map<String, ContextManager> contextManagers;
-    private final Set<String> optionKeys;
+    private final Set<String> lootOptionKeys;
+    private final Set<String> poolOptionKeys;
 
     public LootManager(Plugin plugin) {
         this.plugin = plugin;
         this.lootLoader = new LootLoader(this);
         this.contextManagers = new HashMap<>();
-        this.optionKeys = new HashSet<>();
+        this.lootOptionKeys = new HashSet<>();
+        this.poolOptionKeys = new HashSet<>();
     }
 
     public Plugin getPlugin() {
@@ -42,16 +44,28 @@ public class LootManager {
         this.contextManagers.put(contextManager.getContextKey(), contextManager);
     }
 
-    public Set<String> getOptionKeys() {
-        return optionKeys;
+    public Set<String> getLootOptionKeys() {
+        return lootOptionKeys;
     }
 
-    public void addOptionKey(String key) {
-        optionKeys.add(key);
+    public void addLootOptionKey(String key) {
+        lootOptionKeys.add(key);
     }
 
-    public void addOptionKeys(String... keys) {
-        optionKeys.addAll(Arrays.asList(keys));
+    public void addLootOptionKeys(String... keys) {
+        lootOptionKeys.addAll(Arrays.asList(keys));
+    }
+
+    public Set<String> getPoolOptionKeys() {
+        return poolOptionKeys;
+    }
+
+    public void addPoolOptionKey(String key) {
+        poolOptionKeys.add(key);
+    }
+
+    public void addPoolOptionKeys(String... keys) {
+        poolOptionKeys.addAll(Arrays.asList(keys));
     }
 
 }

@@ -10,10 +10,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class LootLoader extends Parser {
 
@@ -39,9 +36,17 @@ public class LootLoader extends Parser {
             if (currentPool == null) continue;
 
             double baseChance = currentPool.getDouble("base_chance", 1.0) / 100; // Converts from percent chance to decimal
-            double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0) / 100;
             int selectionPriority = currentPool.getInt("selection_priority", 1);
             boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
+
+            // Load pool options
+            Map<String, Object> options = new HashMap<>();
+            for (String optionKey : manager.getPoolOptionKeys()) {
+                if (currentPool.contains(optionKey)) {
+                    Object option = currentPool.get(optionKey);
+                    options.put(optionKey, option);
+                }
+            }
 
             // Parse each loot entry
             List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
@@ -75,7 +80,7 @@ public class LootLoader extends Parser {
                 index++;
             }
             // Create pool
-            LootPool pool = new LootPool(poolName, lootList, baseChance, chancePerLuck, selectionPriority, overrideVanillaLoot);
+            LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot, options);
             pools.add(pool);
         }
         // Sort pools by selection priority
