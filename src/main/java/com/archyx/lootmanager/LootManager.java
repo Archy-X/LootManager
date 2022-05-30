@@ -3,12 +3,11 @@ package com.archyx.lootmanager;
 import com.archyx.lootmanager.loot.LootLoader;
 import com.archyx.lootmanager.loot.context.ContextManager;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public final class LootManager extends JavaPlugin {
+public class LootManager {
 
     private final Plugin plugin;
     private final LootLoader lootLoader;
