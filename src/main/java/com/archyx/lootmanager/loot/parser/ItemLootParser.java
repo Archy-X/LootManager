@@ -8,6 +8,7 @@ import com.archyx.lootmanager.util.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.apache.commons.lang.Validate;
@@ -206,8 +207,14 @@ public class ItemLootParser extends LootParser {
         }
         // Custom NBT
         if (map.containsKey("nbt")) {
-            Map<?, ?> nbtMap = getMap(map, "nbt");
-            item = parseNBT(item, nbtMap);
+            Object element = getElement(map, "nbt");
+            if (element instanceof Map<?, ?>) {
+                Map<?, ?> nbtMap = getMap(map, "nbt");
+                item = parseNBT(item, nbtMap);
+            } else if (element instanceof String) {
+                String nbtString = getString(map, "nbt");
+                item = parseNBTString(item, nbtString);
+            }
         }
         return item;
 
@@ -257,6 +264,13 @@ public class ItemLootParser extends LootParser {
                 }
             }
         }
+    }
+
+    private ItemStack parseNBTString(ItemStack item, String nbtString) {
+        NBTContainer container = new NBTContainer(nbtString);
+        NBTItem nbtItem = new NBTItem(item);
+        nbtItem.mergeCompound(container);
+        return nbtItem.getItem();
     }
 
     protected int[] parseAmount(Map<?, ?> map) {
