@@ -2,6 +2,7 @@ package com.archyx.lootmanager;
 
 import com.archyx.lootmanager.loot.LootLoader;
 import com.archyx.lootmanager.loot.context.ContextManager;
+import com.archyx.lootmanager.loot.parser.CustomItemParser;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,6 +15,7 @@ public class LootManager {
     private final Map<String, ContextManager> contextManagers;
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
+    private final List<CustomItemParser> customItemParsers;
 
     public LootManager(Plugin plugin) {
         this.plugin = plugin;
@@ -21,6 +23,7 @@ public class LootManager {
         this.contextManagers = new HashMap<>();
         this.lootOptionKeys = new HashSet<>();
         this.poolOptionKeys = new HashSet<>();
+        this.customItemParsers = new ArrayList<>();
     }
 
     public Plugin getPlugin() {
@@ -66,6 +69,14 @@ public class LootManager {
 
     public void addPoolOptionKeys(String... keys) {
         poolOptionKeys.addAll(Arrays.asList(keys));
+    }
+
+    public List<CustomItemParser> getCustomItemParsers() {
+        return customItemParsers;
+    }
+
+    public void registerCustomItemParser(CustomItemParser customItemParser) {
+        customItemParsers.add(customItemParser);
     }
 
 }

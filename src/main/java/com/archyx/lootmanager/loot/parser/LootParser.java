@@ -35,15 +35,6 @@ public abstract class LootParser extends Parser {
         }
     }
 
-
-    protected double parseXp(Map<?, ?> map) {
-        if (map.containsKey("xp")) {
-            return getDouble(map, "xp");
-        } else {
-            return -1.0;
-        }
-    }
-
     protected Map<String, Set<LootContext>> parseContexts(Map<?, ?> map) {
         Map<String, Set<LootContext>> contexts = new HashMap<>();
         for (String contextKey : manager.getContextKeySet()) {

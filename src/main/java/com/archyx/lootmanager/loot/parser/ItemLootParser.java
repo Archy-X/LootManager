@@ -32,7 +32,18 @@ public class ItemLootParser extends LootParser {
 
     @Override
     public Loot parse(Map<?, ?> map) {
-        ItemStack item = parseItem(map);
+        ItemStack item = null;
+        // Check if any custom parsers should be used
+        for (CustomItemParser parser : manager.getCustomItemParsers()) {
+            if (parser.shouldUseParser(map)) {
+                item = parser.parseCustomItem(map);
+                break;
+            }
+        }
+        // Parse normally
+        if (item == null) {
+            item = parseItem(map);
+        }
         Validate.notNull(item, "Failed to parse item");
 
         int[] amount = parseAmount(map);
