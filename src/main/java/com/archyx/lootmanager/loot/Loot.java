@@ -44,7 +44,6 @@ public abstract class Loot {
         return type.cast(o);
     }
 
-    @Nullable
     public <T> T getOption(String key, Class<T> type, T def) {
         Object o = options.get(key);
         if (o == null) return def;
