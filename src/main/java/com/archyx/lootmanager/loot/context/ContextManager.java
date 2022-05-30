@@ -2,6 +2,8 @@ package com.archyx.lootmanager.loot.context;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
+
 public abstract class ContextManager {
 
     private final String contextKey;
@@ -15,6 +17,6 @@ public abstract class ContextManager {
     }
 
     @Nullable
-    public abstract LootContext parseContext(String name);
+    public abstract Set<LootContext> parseContext(String name);
 
 }

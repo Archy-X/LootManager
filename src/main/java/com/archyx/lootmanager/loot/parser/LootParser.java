@@ -54,9 +54,9 @@ public abstract class LootParser extends Parser {
 
                 List<String> contextList = getStringList(map, contextKey); // Get the list of contexts
                 for (String contextName : contextList) { // Parse each context
-                    LootContext lootContext = contextManager.parseContext(contextName);
+                    Set<LootContext> lootContext = contextManager.parseContext(contextName);
                     if (lootContext != null) {
-                        contextSet.add(lootContext);
+                        contextSet.addAll(lootContext);
                     }
                 }
                 contexts.put(contextKey, contextSet);
