@@ -7,6 +7,7 @@ import com.archyx.lootmanager.util.MaterialUtil;
 import com.archyx.lootmanager.util.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.apache.commons.lang.Validate;
@@ -236,15 +237,23 @@ public class ItemLootParser extends LootParser {
         return nbtItem.getItem();
     }
 
-    private void applyMapToNBT(NBTItem item, Map<?, ?> map) {
+    private void applyMapToNBT(NBTCompound item, Map<?, ?> map) {
         for (Map.Entry<?, ?> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();
             if (key instanceof String) {
                 if (value instanceof Map<?, ?>) { // Recursively apply sub maps
-                    applyMapToNBT(item, (Map<?, ?>) value);
+                    applyMapToNBT(item.getOrCreateCompound((String) key), (Map<?, ?>) value);
                 } else {
-                    item.setObject((String) key, value);
+                    if (value instanceof Integer) {
+                        item.setInteger((String) key, (int) value);
+                    } else if (value instanceof Double) {
+                        item.setDouble((String) key, (double) value);
+                    } else if (value instanceof Boolean) {
+                        item.setBoolean((String) key, (boolean) value);
+                    } else if (value instanceof String) {
+                        item.setString((String) key, (String) value);
+                    }
                 }
             }
         }
