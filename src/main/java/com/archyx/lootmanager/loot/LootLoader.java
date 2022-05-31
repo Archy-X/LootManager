@@ -86,7 +86,9 @@ public class LootLoader extends Parser {
         // Sort pools by selection priority
         pools.sort((pool1, pool2) -> pool2.getSelectionPriority() - pool1.getSelectionPriority());
         // Create table
-        return new LootTable(type, pools);
+        String fileName = file.getName();
+        String tableName = fileName.substring(0, fileName.lastIndexOf("."));
+        return new LootTable(tableName, UUID.randomUUID(), type, pools);
     }
 
 }
